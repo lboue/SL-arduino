@@ -35,6 +35,7 @@
 #include "devices/DeviceHumiditySensor.h"
 #include "devices/DeviceTempSensor.h"
 #include "devices/DeviceSwitch.h"
+#include "devices/DeviceContactSensor.h"
 #include "devices/DeviceIlluminanceSensor.h"
 #include "devices/DevicePressureSensor.h"
 #include "devices/DeviceOccupancySensor.h"
@@ -45,6 +46,7 @@
 // Device types for dynamic endpoints: TODO Need a generated file from ZAP to define these!
 // (taken from matter-devices.xml)
 #define DEVICE_TYPE_BRIDGED_NODE 0x0013
+#define DEVICE_TYPE_CONTACT_SENSOR 0x0015
 #define DEVICE_TYPE_ON_OFF_LIGHT 0x0100
 #define DEVICE_TYPE_DIMMABLE_LIGHT 0x0101
 #define DEVICE_TYPE_POWER_SOURCE 0x0011
@@ -77,6 +79,7 @@ void HandleDeviceTempSensorStatusChanged(DeviceTempSensor* dev, DeviceTempSensor
 void HandleDeviceHumiditySensorStatusChanged(DeviceHumiditySensor* dev, DeviceHumiditySensor::Changed_t itemChangedMask);
 void HandleDeviceLightbulbStatusChanged(DeviceLightbulb* dev, DeviceLightbulb::Changed_t itemChangedMask);
 void HandleDeviceSwitchStatusChanged(DeviceSwitch* dev, DeviceSwitch::Changed_t itemChangedMask);
+void HandleDeviceContactSensorStatusChanged(DeviceContactSensor* dev, DeviceContactSensor::Changed_t itemChangedMask);
 void HandleDeviceIlluminanceSensorStatusChanged(DeviceIlluminanceSensor* dev, DeviceIlluminanceSensor::Changed_t itemChangedMask);
 void HandleDevicePressureSensorStatusChanged(DevicePressureSensor* dev, DevicePressureSensor::Changed_t itemChangedMask);
 void HandleDeviceOccupancySensorStatusChanged(DeviceOccupancySensor* dev, DeviceOccupancySensor::Changed_t itemChangedMask);
