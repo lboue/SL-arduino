@@ -48,9 +48,14 @@ public:
   void toggle();
   void set_startup_on_off(DeviceLightbulb::StartupOnOff_t startup_on_off);
   DeviceLightbulb::StartupOnOff_t get_startup_on_off();
+  
+  void set_bat_percent_remaining_raw(uint8_t value);
+  void set_bat_percent_remaining(double percent);
+  uint8_t get_bat_percent_remaining();
 
   operator bool();
   void operator=(bool state);
+  void operator=(uint8_t value);
 
 protected:
   enum bulb_types_e {
