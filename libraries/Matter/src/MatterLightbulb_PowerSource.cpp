@@ -123,6 +123,8 @@ DECLARE_DYNAMIC_CLUSTER(Descriptor::Id, descriptorAttrs, nullptr, nullptr),
 DECLARE_DYNAMIC_CLUSTER(BridgedDeviceBasicInformation::Id, bridgedDeviceBasicAttrs, nullptr, nullptr),
 DECLARE_DYNAMIC_CLUSTER(Identify::Id, identifyAttrs, identifyIncomingCommands, nullptr),
 DECLARE_DYNAMIC_CLUSTER(Groups::Id, groupsAttrs, groupsIncomingCommands, groupsOutgoingCommands),
+// PowerSource
+DECLARE_DYNAMIC_CLUSTER(PowerSource::Id, powerSourceAttrs, nullptr, nullptr),
 DECLARE_DYNAMIC_CLUSTER_LIST_END;
 
 // Dimmable Lightbulb endpoint cluster list
@@ -481,6 +483,47 @@ void MatterDimmableLightbulb::set_brightness_percent(uint8_t brightness)
   uint8_t dev_max_brightness = this->lightbulb_device->GetLevelControlMaxLevel();
   float brightness_full_scale = (float)brightness * (float)dev_max_brightness / 100.0f;
   this->set_brightness((uint8_t)(ceil(brightness_full_scale)));
+}
+
+/***************************************************************************//**
+ * Sets the lightbulb's battery value
+ * The accepted range is TODO
+ *
+ ******************************************************************************/
+void MatterDimmableLightbulb::set_bat_percent_remaining_raw(uint8_t value)
+{
+  if (!this->initialized) {
+    return;
+  }
+  PlatformMgr().LockChipStack();
+  this->lightbulb_device->SetBatPercentRemaining(value);
+  PlatformMgr().UnlockChipStack();
+}
+
+/***************************************************************************//**
+ * Sets the lightbulb's battery percentage
+ * The accepted range is 0-100.
+ *
+ * @param[in] brightness the requested brightness in the range of 0-100
+ ******************************************************************************/
+void MatterDimmableLightbulb::set_bat_percent_remaining(double percent)
+{
+  if (!this->initialized) {
+    return;
+  }
+  uint8_t out_value = static_cast<uint8_t>(percent * 2.0l);
+  this->set_bat_percent_remaining_raw(out_value);
+}
+
+/***************************************************************************//**
+ * uint8_t operator for getting the lightbulb's battery percentage
+ * The provided value's range is 0-100.
+ *
+ * @return the lightbulb's current battery percentage
+ ******************************************************************************/
+uint8_t MatterDimmableLightbulb::get_bat_percent_remaining()
+{
+  return this->lightbulb_device->GetBatPercentRemaining();
 }
 
 /***************************************************************************//**
