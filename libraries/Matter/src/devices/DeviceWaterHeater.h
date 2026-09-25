@@ -97,6 +97,10 @@ public:
                                          uint8_t* buffer) override;
 
 private:
+  // Helper to keep HeatDemand synchronized with system state
+  // HeatDemand reflects active heat sources when system mode is ON or boost is ACTIVE
+  void SyncHeatDemand();
+
   void HandleWaterHeaterDeviceStatusChanged(Changed_t itemChangedMask);
 
   int16_t local_temperature;
